@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thozhan AI - Your Friendly AI Companion for daily conversations, motivation, and learning.">
+  <title>Thozhan AI - Your Friendly AI Companion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--  <link rel="stylesheet" href="css/style.css">-->
+<!--  <link rel="stylesheet" href="css/animations.css">-->
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/animations.css' %}">
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="logo-icon">T</span>
+        <span>Thozhan AI</span>
+      </a>
+      <div class="navbar-actions">
+        <button class="btn-icon theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9728;</span>
+        </button>
+<!--        <a href="login.html" class="btn btn-ghost">Login</a>-->
+<!--        <a href="signup.html" class="btn btn-primary btn-sm">Get Started</a>-->
+        <a href="{% url 'login' %}" class="btn btn-ghost">Login</a>
+        <a href="{% url 'signup' %}" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="landing">
+    <section class="hero">
+      <div class="hero-content animate-fade-in-up">
+        <div class="hero-logo" aria-hidden="true">T</div>
+        <h1 class="hero-title">Thozhan AI</h1>
+        <p class="hero-tagline">Your Friendly AI Companion</p>
+        <p class="hero-description">
+          Meet Thozhan AI, your supportive AI friend for daily conversations, motivation, and learning.
+          Always here to chat, inspire, and help you grow, whenever you need.
+        </p>
+        <div class="hero-actions">
+          <a href="{% url 'signup'%}" class="btn btn-primary btn-lg">
+            <span>Get Started</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
+          <a href="{% url 'login' %}" class="btn btn-secondary btn-lg">Login</a>
+        </div>
+
+        <div class="hero-features">
+          <div class="hero-feature animate-fade-in-up delay-100">
+            <div class="hero-feature-icon">&#128172;</div>
+            <h4>Smart Conversations</h4>
+            <p>Engage in natural, meaningful chats with an AI that understands you.</p>
+          </div>
+          <div class="hero-feature animate-fade-in-up delay-200">
+            <div class="hero-feature-icon">&#128161;</div>
+            <h4>Daily Motivation</h4>
+            <p>Start your day with inspiring quotes and positive energy.</p>
+          </div>
+          <div class="hero-feature animate-fade-in-up delay-300">
+            <div class="hero-feature-icon">&#128218;</div>
+            <h4>Learn & Grow</h4>
+            <p>Explore new topics and expand your knowledge every day.</p>
+          </div>
+          <div class="hero-feature animate-fade-in-up delay-400">
+            <div class="hero-feature-icon">&#127760;</div>
+            <h4>Bilingual Support</h4>
+            <p>Chat in English or Tamil, your comfort language.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<!--  <script src="js/theme.js"></script>-->
+<!--  <script src="js/main.js"></script>-->
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

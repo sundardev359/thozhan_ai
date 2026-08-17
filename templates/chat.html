@@ -1,0 +1,349 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Chat with Thozhan AI - Your Friendly AI Companion">
+  <title>Chat - Thozhan AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--  <link rel="stylesheet" href="css/style.css">-->
+<!--  <link rel="stylesheet" href="css/chat.css">-->
+<!--  <link rel="stylesheet" href="css/animations.css">-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/chat.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+</head>
+<body>
+  <div class="chat-layout">
+    <!-- Sidebar Overlay (Mobile) -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-brand">
+          <div class="sidebar-brand-left">
+            <span class="sidebar-logo">T</span>
+            <span class="sidebar-brand-name">Thozhan AI</span>
+          </div>
+          <button class="btn-icon theme-toggle" aria-label="Toggle theme" style="width:34px;height:34px;">
+            <span class="theme-icon">&#9728;</span>
+          </button>
+        </div>
+        <button class="new-chat-btn" id="newChatBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+          New Chat
+        </button>
+      </div>
+
+      <div class="sidebar-search">
+        <div class="sidebar-search-wrapper">
+          <span class="search-icon">&#128269;</span>
+          <input type="text" id="chatSearch" class="sidebar-search-input" placeholder="Search conversations...">
+        </div>
+      </div>
+
+      <div class="sidebar-chats" id="chatHistoryList">
+        <!-- Chat history rendered by JS -->
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-profile" id="profileBtn">
+          <div class="sidebar-profile-avatar">A</div>
+          <div class="sidebar-profile-info">
+            <div class="sidebar-profile-name">{{ request.user.first_name}}</div>
+            <div class="sidebar-profile-email">{{request.user.email}}</div>
+          </div>
+        </div>
+        <div class="sidebar-footer-actions">
+          <button class="btn-icon" id="settingsBtn" title="Settings" style="width:34px;height:34px;font-size:1rem;">&#9881;</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-main">
+      <!-- Chat Header -->
+      <header class="chat-header">
+        <div class="chat-header-left">
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">&#9776;</button>
+          <div class="chat-header-avatar">
+            <div class="avatar">T</div>
+            <span class="status-dot"></span>
+          </div>
+          <div class="chat-header-info">
+            <h3>Thozhan AI</h3>
+            <p>Online</p>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button class="btn-icon theme-toggle" aria-label="Toggle theme">
+            <span class="theme-icon">&#9728;</span>
+          </button>
+          <button class="btn btn-ghost btn-sm" id="settingsBtnTop">&#9881; Settings</button>
+        </div>
+      </header>
+
+      <!-- Chat Welcome -->
+      <div class="chat-welcome" id="chatWelcome">
+        <div class="chat-welcome-content animate-fade-in-up">
+          <div class="chat-welcome-icon">T</div>
+          <h2>Vanakkam!</h2>
+          <p>I'm Thozhan AI. I'm here to chat, motivate you, and help you whenever you need.</p>
+          <div class="chat-welcome-suggestions">
+            <div class="suggestion-card hover-lift">
+              <div class="suggestion-card-icon">&#128161;</div>
+              <h4>Give me motivation</h4>
+              <p>Start the day with inspiring words</p>
+            </div>
+            <div class="suggestion-card hover-lift">
+              <div class="suggestion-card-icon">&#128218;</div>
+              <h4>Teach me something new</h4>
+              <p>Learn interesting topics</p>
+            </div>
+            <div class="suggestion-card hover-lift">
+              <div class="suggestion-card-icon">&#128172;</div>
+              <h4>Let's have a chat</h4>
+              <p>Just casual friendly conversation</p>
+            </div>
+            <div class="suggestion-card hover-lift">
+              <div class="suggestion-card-icon">&#127919;</div>
+              <h4>Help me set goals</h4>
+              <p>Plan and achieve your dreams</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages -->
+      <div class="chat-messages" id="chatMessages" >
+        <!-- Messages rendered by JS -->
+          {% for chat in history %}
+          <div class="message user">
+            <div class="message-content">
+              <div class="message-bubble">
+                {{ chat.message }}
+              </div>
+            </div>
+          </div>
+          <div class="message ai">
+            <div class="message-content">
+              <div class="message-bubble">
+                {{ chat.reply }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        <!-- Typing Indicator -->
+        <div class="typing-indicator" id="typingIndicator">
+          <div class="message-avatar">T</div>
+          <div class="typing-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Input -->
+      <div class="chat-input-area">
+        <div class="chat-input-container">
+          <div class="chat-input-actions">
+            <button class="chat-input-action" title="Attach file">&#128206;</button>
+            <button class="chat-input-action" title="Emoji">&#128578;</button>
+          </div>
+          <textarea class="chat-input" id="chatInput" placeholder="Type a message..." rows="1"></textarea>
+          <button class="send-btn" id="sendBtn" aria-label="Send message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Settings Overlay -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
+
+    <!-- Settings Panel -->
+    <div class="settings-panel" id="settingsPanel">
+      <div class="settings-header">
+        <h3>Settings</h3>
+        <button class="btn-icon" id="settingsClose" aria-label="Close settings" style="font-size:1.2rem;">&#10005;</button>
+      </div>
+      <div class="settings-body">
+        <div class="settings-section">
+          <div class="settings-section-title">Appearance</div>
+          <div class="settings-item">
+            <div class="settings-item-left">
+              <div class="settings-item-icon">&#9790;</div>
+              <div class="settings-item-text">
+                <h4>Dark Mode</h4>
+                <p>Toggle dark/light theme</p>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" class="theme-toggle-checkbox">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Language</div>
+          <div class="settings-item">
+            <div class="settings-item-left">
+              <div class="settings-item-icon">&#127760;</div>
+              <div class="settings-item-text">
+                <h4>Tamil Language</h4>
+                <p>Switch to Tamil / English</p>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" id="langToggle">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Notifications</div>
+          <div class="settings-item">
+            <div class="settings-item-left">
+              <div class="settings-item-icon">&#128276;</div>
+              <div class="settings-item-text">
+                <h4>Notifications</h4>
+                <p>Enable push notifications</p>
+              </div>
+            </div>
+            <label class="toggle-switch">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <div class="settings-section">
+          <div class="settings-section-title">Data</div>
+          <div class="settings-item" id="clearHistoryBtn" style="cursor:pointer;">
+            <div class="settings-item-left">
+              <div class="settings-item-icon" style="background:var(--error-light);color:var(--error);">&#128465;</div>
+              <div class="settings-item-text">
+                <h4>Clear Chat History</h4>
+                <p>Delete all conversations</p>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+          <div class="settings-item" id="logoutBtn" style="cursor:pointer;">
+            <div class="settings-item-left">
+              <div class="settings-item-icon" style="background:var(--warning-light);color:var(--warning);">&#9211;</div>
+              <div class="settings-item-text">
+                <h4>Logout</h4>
+                <p>Sign out of your account</p>
+              </div>
+            </div>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile Overlay -->
+    <div class="settings-overlay" id="profileOverlay"></div>
+
+    <!-- Profile Panel -->
+    <div class="profile-panel" id="profilePanel">
+      <div class="profile-header">
+        <h3>Profile</h3>
+        <button class="btn-icon" id="profileClose" aria-label="Close profile" style="font-size:1.2rem;">&#10005;</button>
+      </div>
+      <div class="profile-body">
+        <div class="profile-avatar-large">
+          A
+          <button class="edit-photo-btn" title="Change photo">&#128247;</button>
+        </div>
+        <div class="profile-name">{{ request.user.first_name}}</div>
+        <div class="profile-email">{{request.user.email}}</div>
+
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <div class="profile-stat-value">156</div>
+            <div class="profile-stat-label">Conversations</div>
+          </div>
+          <div class="profile-stat">
+            <div class="profile-stat-value">42</div>
+            <div class="profile-stat-label">Days Active</div>
+          </div>
+        </div>
+
+        <div class="profile-info-list">
+          <div class="profile-info-item">
+            <span class="icon">&#128100;</span>
+            <span class="label">Name</span>
+            <span class="value">{{ request.user.first_name}}</span>
+          </div>
+          <div class="profile-info-item">
+            <span class="icon">&#9993;</span>
+            <span class="label">Email</span>
+            <span class="value">{{request.user.email}}</span>
+          </div>
+          <div class="profile-info-item">
+            <span class="icon">&#128197;</span>
+            <span class="label">Joined</span>
+            <span class="value">Jan 2025</span>
+          </div>
+          <div class="profile-info-item">
+            <span class="icon">&#128276;</span>
+            <span class="label">Notifications</span>
+            <span class="value">On</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button class="btn btn-primary" style="width:100%;">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--  <script src="js/theme.js"></script>-->
+<!--  <script src="js/chat.js"></script>-->
+  <script src="{% static 'js/theme.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/chat.js' %}"></script>
+  <script>
+    // Sync settings panel dark mode toggle with ThemeManager
+    document.addEventListener('DOMContentLoaded', () => {
+      const settingsToggle = document.querySelector('.theme-toggle-checkbox');
+      if (settingsToggle) {
+        settingsToggle.checked = ThemeManager.get() === 'dark';
+        settingsToggle.addEventListener('change', () => {
+          ThemeManager.toggle();
+          settingsToggle.checked = ThemeManager.get() === 'dark';
+        });
+      }
+
+      // Sync header theme toggle buttons
+      document.querySelectorAll('.chat-header .theme-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          ThemeManager.toggle();
+          if (settingsToggle) settingsToggle.checked = ThemeManager.get() === 'dark';
+        });
+      });
+
+      // Sync sidebar theme toggle
+      document.querySelector('.sidebar .theme-toggle')?.addEventListener('click', () => {
+        ThemeManager.toggle();
+        if (settingsToggle) settingsToggle.checked = ThemeManager.get() === 'dark';
+      });
+
+      // Settings panel top button
+      document.getElementById('settingsBtnTop')?.addEventListener('click', () => {
+        document.getElementById('settingsPanel').classList.add('open');
+      });
+    });
+  </script>
+</body>
+</html>

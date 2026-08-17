@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Login to Thozhan AI - Your Friendly AI Companion">
+  <title>Login - Thozhan AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--  <link rel="stylesheet" href="css/style.css">-->
+<!--  <link rel="stylesheet" href="css/animations.css">-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="logo-icon">T</span>
+        <span>Thozhan AI</span>
+      </a>
+      <div class="navbar-actions">
+        <button class="btn-icon theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9728;</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Page -->
+  <main class="auth-page page-enter">
+    <div class="auth-bg">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-card-logo">T</div>
+        <h2>Welcome Back</h2>
+        <p>Login to continue with Thozhan AI</p>
+      </div>
+
+      <form class="auth-form"  method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <div class="form-input-icon">
+            <span class="icon">&#9993;</span>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <p class="form-error">Please enter a valid email</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="form-input-icon">
+            <span class="icon">&#128274;</span>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Enter your password" autocomplete="current-password" required>
+            <button type="button" class="toggle-password" aria-label="Toggle password visibility">&#128065;</button>
+          </div>
+          <p class="form-error">Password must be at least 6 characters</p>
+        </div>
+
+        <div class="form-row">
+          <div class="form-checkbox">
+            <input type="checkbox" id="remember" name="remember">
+            <label for="remember">Remember me</label>
+          </div>
+          <a href="#" class="form-link">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%;">
+          Login
+        </button>
+
+        <div class="auth-divider">
+          <span>or continue with</span>
+        </div>
+
+        <div class="auth-social">
+          <button type="button" class="btn" aria-label="Google">&#127760;</button>
+          <button type="button" class="btn" aria-label="GitHub">&#128187;</button>
+          <button type="button" class="btn" aria-label="Apple">&#63743;</button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+        Don't have an account? <a href="signup.html" class="form-link">Sign up</a>
+      </div>
+    </div>
+  </main>
+
+<!--  <script src="js/theme.js"></script>-->
+<!--  <script src="js/main.js"></script>-->
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Create an account on Thozhan AI - Your Friendly AI Companion">
+  <title>Sign Up - Thozhan AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!--  <link rel="stylesheet" href="css/style.css">-->
+<!--  <link rel="stylesheet" href="css/animations.css">-->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/animations.css' %}">
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="container navbar-inner">
+      <a href="index.html" class="navbar-brand">
+        <span class="logo-icon">T</span>
+        <span>Thozhan AI</span>
+      </a>
+      <div class="navbar-actions">
+        <button class="btn-icon theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon">&#9728;</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Auth Page -->
+  <main class="auth-page page-enter">
+    <div class="auth-bg">
+      <div class="circle circle-1"></div>
+      <div class="circle circle-2"></div>
+      <div class="circle circle-3"></div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-card-header">
+        <div class="auth-card-logo">T</div>
+        <h2>Create Account</h2>
+        <p>Join Thozhan AI and start your journey</p>
+      </div>
+
+      <form class="auth-form"  method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+          <label class="form-label" for="name">Full Name</label>
+          <div class="form-input-icon">
+            <span class="icon">&#128100;</span>
+            <input type="text" id="name" name="name" class="form-input" placeholder="Enter your name" autocomplete="name" required>
+          </div>
+          <p class="form-error">Please enter your name</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <div class="form-input-icon">
+            <span class="icon">&#9993;</span>
+            <input type="email" id="email" name="email" class="form-input" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <p class="form-error">Please enter a valid email</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="password">Password</label>
+          <div class="form-input-icon">
+            <span class="icon">&#128274;</span>
+            <input type="password" id="password" name="password" class="form-input" placeholder="Create a password" autocomplete="new-password" required>
+            <button type="button" class="toggle-password" aria-label="Toggle password visibility">&#128065;</button>
+          </div>
+          <p class="form-error">Password must be at least 6 characters</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="confirmPassword">Confirm Password</label>
+          <div class="form-input-icon">
+            <span class="icon">&#128274;</span>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirm your password" autocomplete="new-password" required>
+            <button type="button" class="toggle-password" aria-label="Toggle password visibility">&#128065;</button>
+          </div>
+          <p class="form-error">Passwords do not match</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 8px;">
+          Create Account
+        </button>
+
+        <div class="auth-divider">
+          <span>or sign up with</span>
+        </div>
+
+        <div class="auth-social">
+          <button type="button" class="btn" aria-label="Google">&#127760;</button>
+          <button type="button" class="btn" aria-label="GitHub">&#128187;</button>
+          <button type="button" class="btn" aria-label="Apple">&#63743;</button>
+        </div>
+      </form>
+
+      <div class="auth-footer">
+<!--        Already have an account? <a href="login.html" class="form-link">Login</a>-->
+        Already have an account? <a href="{% url 'login' %}" class="form-link">Login</a>
+      </div>
+    </div>
+  </main>
+
+<!--  <script src="js/theme.js"></script>-->
+<!--  <script src="js/main.js"></script>-->
+<script src="{% static 'js/theme.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
